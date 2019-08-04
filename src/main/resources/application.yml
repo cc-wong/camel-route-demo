@@ -1,1 +1,10 @@
-
+tasks:
+  task-1:
+    properties:
+      taskName: task1
+  task-2:
+    properties:
+      task-name: task2
+  task-3:
+    properties:
+      task-name: task3
