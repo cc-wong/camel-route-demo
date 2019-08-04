@@ -4,19 +4,21 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
-import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The base class for a task.
  */
+@Slf4j
 public abstract class BaseTask extends RouteBuilder {
 
 	/** The prefix for a property key of a task runner. */
 	protected static final String PROPERTY_KEY_PREFIX = "tasks.";
 
 	/** The properties of this task runner. */
-	@Getter
-	private TaskProperties properties = new TaskProperties();
+	@Setter
+	private TaskProperties properties;
 
 	/**
 	 * Configure.
@@ -25,6 +27,7 @@ public abstract class BaseTask extends RouteBuilder {
 	 */
 	@Override
 	public void configure() throws Exception {
+		log.info(String.format("Configuring task with properties: %s", properties));
 		from("direct:" + properties.getTaskName()).routeId(properties.getTaskName()).process(new Processor() {
 
 			/**
@@ -35,9 +38,9 @@ public abstract class BaseTask extends RouteBuilder {
 			 */
 			@Override
 			public void process(Exchange exchange) throws Exception {
-				String name = exchange.getIn().getBody(String.class);
-				runTask(name);
-				exchange.getOut().setBody(new TaskResult("Success."));
+				String requestor = exchange.getIn().getBody(String.class);
+				String successMessage = runTask(requestor);
+				exchange.getOut().setBody(new TaskResult(successMessage));
 			}
 
 		});
@@ -47,7 +50,8 @@ public abstract class BaseTask extends RouteBuilder {
 	 * Implement to run a task.
 	 *
 	 * @param requestor the requestor's name
+	 * @return a specific message on successfully finishing the task
 	 */
-	protected abstract void runTask(String requestor);
+	protected abstract String runTask(String requestor);
 
 }

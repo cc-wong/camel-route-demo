@@ -24,11 +24,13 @@ public class Task2 extends BaseTask {
 	 * Run task.
 	 *
 	 * @param requestor the requestor's name
+	 * @return "Yo! [requestor]."
 	 */
 	@Override
-	protected void runTask(String requestor) {
+	protected String runTask(String requestor) {
 		log.info("Task 2.");
 		demoService.sleep(500);
+		return String.format("Yo! %s.", requestor);
 	}
 
 }
