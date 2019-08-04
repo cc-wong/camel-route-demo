@@ -8,3 +8,4 @@ tasks:
   task-3:
     properties:
       task-name: task3
+    success-message: "Task #3 is completed."

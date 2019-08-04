@@ -3,8 +3,9 @@ This application demonstrates the following:
 - Triggering task(s) via Apache Camel endpoints.
 - Controlling of tasks triggered with command line arguments.
 - A task framework where:
-   - a new task can be created simply by creating a sub-class of the base task class and assigning values to properties in application.yml, and
-   - tasks accept arguments from and return results to the task runner.
+   - a new task can be created simply by creating a sub-class of the base task class and assigning values to properties in application.yml,
+   - tasks accept arguments from and return results to the task runner, and
+   - a task allows its own additional configurations.
 
 ## Running this application
 ### As JAR
